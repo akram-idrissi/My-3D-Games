@@ -5,7 +5,10 @@ from settings import *
 
 
 def ray_casting(screen, player_pos, player_angle):
+    # The angle where the ray casting will be drawn
     cur_angle = player_angle - HALF_FOV
+
+    # The player x and y
     xo, yo = player_pos
 
     for ray in range(NUM_RAYS):
@@ -14,7 +17,7 @@ def ray_casting(screen, player_pos, player_angle):
         for depth in range(MAX_DEPTH):
             x = xo + depth * cos_a
             y = yo + depth * sin_a
-            # pygame.draw.line(screen, DARKGREY, player_pos, (x, y), 2)
+            pygame.draw.line(screen, DARKGREY, player_pos, (x, y), 2)
             if (x // TILE * TILE, y // TILE * TILE) in world_map:
                 depth *= math.cos(player_angle - cur_angle)
                 if depth == 0:
@@ -25,4 +28,3 @@ def ray_casting(screen, player_pos, player_angle):
                 pygame.draw.rect(screen, color, (ray * SCALE, HALF_HEIGHT - proj_height // 2, SCALE, proj_height))
                 break
         cur_angle += DELTA_ANGLE
-
